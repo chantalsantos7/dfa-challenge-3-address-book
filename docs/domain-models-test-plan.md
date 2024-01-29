@@ -62,7 +62,22 @@ classDiagram
         -validatePhoneNumber(String phoneNumber) boolean
         -validateEmailAddress(String emailAddress) boolean
     }
-    
-    
-
 ```
+
+## Test Plan
+
+### AddressBook Tests
+
+#### addContact
+* Length of ArrayList<> contacts should increase by 1
+* Contact can be found in ArrayList<> contacts
+* Adding a null Contact should throw an exception
+
+#### removeContact
++ Length of ArrayList<> contacts should decrease by 1
++ Contact cannot be found in ArrayList<> contacts
++ Trying to remove a contact that isn't in already in the list will not affect the contacts list
++ Trying to remove a null contact should throw an exception
+
+#### findContact
++ 
