@@ -35,23 +35,29 @@ title: Address Book
 classDiagram
     AddressBook o-- Contact
     class AddressBook {
+        $int nextId
         #int id
         -ArrayList~Contact~ contacts
         
+        +AddressBook()
         +addContact() void
-        +removeContact(Contact contact) void
+        +removeContact(Contact contact) boolean
         +findContact(String searchCriteria) Contact
-        +editContact() void
+        +editContact(Contact contact) void
         +viewContacts() void
         +deleteAllContacts() void
+        -checkDuplicate(String contactDetail) boolean
     }
     
     class Contact {
+        $int nextId
         #int id
         #String name
         #String phoneNumber
         #String emailAddress
         
+        +Contact(String name, String phoneNumber, String emailAddress)
+        +Contact(String name, String contactDetail, ContactType contactType)
         +getId() int
         +getName() String
         +setName(String) void
@@ -62,6 +68,12 @@ classDiagram
         -validatePhoneNumber(String phoneNumber) boolean
         -validateEmailAddress(String emailAddress) boolean
     }
+    
+    class ContactType {
+        <<enumeration>>
+        PHONE
+        EMAIL_ADDRESS
+    }
 ```
 
 ## Test Plan
@@ -71,13 +83,49 @@ classDiagram
 #### addContact
 * Length of ArrayList<> contacts should increase by 1
 * Contact can be found in ArrayList<> contacts
+* Should be able to add a Contact when the contacts list isn't empty
 * Adding a null Contact should throw an exception
+
+#### checkDuplicate
++ Will be tested in it's calling class, addContact
++ Should return true if the parameter is a duplicate of an existing Contact's phone number
++ Should return true if the parameter is a duplicate of an existing Contact's email
++ Should return false if the argument is not a duplicate of any data
 
 #### removeContact
 + Length of ArrayList<> contacts should decrease by 1
++ removeContact will return true if successfully removed a Contact
 + Contact cannot be found in ArrayList<> contacts
-+ Trying to remove a contact that isn't in already in the list will not affect the contacts list
++ Trying to remove a Contact that isn't in already in the list will not affect the contacts list and will return false
 + Trying to remove a null contact should throw an exception
++ Trying to remove a contact when the list is empty should return false
 
 #### findContact
-+ 
++ Should return the first Contact that matches search criteria
++ Function should return a null if it cannot find the Contact
++ Should throw an error if a null object is passed to it
+
+#### editContact
++ Should be able to edit name, phone number, or address for selected Contact
+
+#### viewContacts
++ Should call a print statement for each element in the contacts list
+
+#### deleteAllContacts
++ The contacts list should be empty after this function runs
+
+### Contact Tests
+
+#### Constructor(String name, String contactDetail, ContactType contactType)
++ If contactType is PHONE, should correctly set the phone number for this contact, not the email address
++ If contactType is EMAIL_ADDRESS, should correctly set the email address for this contact, not the email address
+
+#### validatePhoneNumber
++ As it's a private function, it should be tested when called in the constructor
++ Should throw an exception if it cannot validate the number
++ The phone number must match a set pattern (i.e. 11 numbers only)
+
+#### validateEmailAddress
++ As it's a private function, will be tested when called in the constructor
++ Should throw an exception if it cannot validate the number
++ The email address must match a set pattern (must contain '@[domain]')
