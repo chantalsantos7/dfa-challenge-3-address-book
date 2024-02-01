@@ -25,5 +25,42 @@ public class ContactTest {
                     () -> assertEquals("example@email.com", contact.getEmailAddress())
             );
         }
+
+        @Test
+        public void testPhoneNumberConstructorReturnsExpectedValues()
+        {
+            Contact contact = new Contact("TestWPhone", "3123555553", ContactDetailType.PHONE_NUMBER);
+
+            assertAll(
+                    () -> assertEquals("TestWPhone", contact.getName()),
+                    () -> assertEquals("3123555553", contact.getPhoneNumber()),
+                    () -> assertEquals(null, contact.getEmailAddress())
+            );
+        }
+
+        @Test
+        public void testEmailAddressConstructorReturnsExpectedValues()
+        {
+            Contact contact = new Contact("TestWEmail", "testEmail@email.com", ContactDetailType.EMAIL_ADDRESS);
+            assertAll(
+                    () -> assertEquals("TestWEmail", contact.getName()),
+                    () -> assertEquals("testEmail@email.com", contact.getEmailAddress()),
+                    () -> assertEquals(null, contact.getPhoneNumber())
+            );
+        }
+
+        
+
+//        @Test
+//        public void testValidatePhoneNumberReturnsExpectedValue()
+//        {
+//
+//        }
+//
+//        @Test
+//        public void testValidateEmailReturnsExpectedValue()
+//        {
+//
+//        }
     }
 }

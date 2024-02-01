@@ -6,6 +6,26 @@ public class Contact {
     private String name;
     private String phoneNumber;
 
+    public Contact(String name, String phoneNumber, String emailAddress)
+    {
+        this.id = nextId++;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.emailAddress = emailAddress;
+    }
+
+    public Contact(String name, String contactDetail, ContactDetailType contactDetailType)
+    {
+        this.id = nextId++;
+        this.name = name;
+        switch (contactDetailType)
+        {
+            case PHONE_NUMBER -> this.phoneNumber = contactDetail;
+            case EMAIL_ADDRESS -> this.emailAddress = contactDetail;
+        }
+    }
+
+
     public int getId() {
         return id;
     }
@@ -24,11 +44,7 @@ public class Contact {
 
     private String emailAddress;
 
-    public Contact(String name, String phoneNumber, String emailAddress)
-    {
-        this.id = nextId++;
-        this.name = name;
-        this.phoneNumber = phoneNumber;
-        this.emailAddress = emailAddress;
-    }
+
+
+
 }
