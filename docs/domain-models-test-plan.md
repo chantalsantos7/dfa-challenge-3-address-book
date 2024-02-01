@@ -65,14 +65,27 @@ classDiagram
         +setPhoneNumber(String) void
         +getEmailAddress() String
         +setEmailAddress(String) void
-        -validatePhoneNumber(String phoneNumber) boolean
-        -validateEmailAddress(String emailAddress) boolean
+%%        -validatePhoneNumber(String phoneNumber) boolean
+%%        -validateEmailAddress(String emailAddress) boolean
     }
     
     class ContactType {
         <<enumeration>>
         PHONE
         EMAIL_ADDRESS
+    }
+    
+    class ValidatorHelpers {
+        +String PHONE_PATTERN$
+        +String EMAIL_PATTERN$
+        
+        +isInputNullOrEmpty(String input) boolean$
+        +checkStringMatchesRules(String input, ContactDetailType contactDetailType) String$
+    }
+    
+    class DisplayHelpers {
+        +printContacts(List~Contact~ contacts) void$
+        +formatContact(Contact contact) String$
     }
 ```
 
@@ -120,12 +133,41 @@ classDiagram
 + If contactType is PHONE, should correctly set the phone number for this contact, not the email address
 + If contactType is EMAIL_ADDRESS, should correctly set the email address for this contact, not the email address
 
-#### validatePhoneNumber
-+ As it's a private function, it should be tested when called in the constructor
-+ Should throw an exception if it cannot validate the number
-+ The phone number must match a set pattern (i.e. 11 numbers only)
+[//]: # (#### validatePhoneNumber)
 
-#### validateEmailAddress
-+ As it's a private function, will be tested when called in the constructor
-+ Should throw an exception if it cannot validate the number
-+ The email address must match a set pattern (must contain '@[domain]')
+[//]: # (+ As it's a private function, it should be tested when called in the constructor)
+
+[//]: # (+ Should throw an exception if it cannot validate the number)
+
+[//]: # (+ The phone number must match a set pattern &#40;i.e. 11 numbers only&#41;)
+
+[//]: # ()
+[//]: # (#### validateEmailAddress)
+
+[//]: # (+ As it's a private function, will be tested when called in the constructor)
+
+[//]: # (+ Should throw an exception if it cannot validate the number)
+
+[//]: # (+ The email address must match a set pattern &#40;must contain '@[domain]'&#41;)
+
+### ValidatorHelpers Tests
+
+#### isInputNullOrEmpty
++ Should return true if String input is null
++ Should return true if String input is empty ("" or ' ');
++ Should return true if String input is whitespace (" ");
++ Should return false is String input is in any other form
+
+#### validateContactInput
++ If contactDetailType is PHONE_NUMBER, return the string if input matches PHONE_PATTERN
++ If contactDetailType is EMAIL_ADDRESS, return the string if input matches EMAIL_PATTERN
++ Should throw IllegalArgumentException if input is null or empty
+
+### DisplayHelpers Tests
+
+#### printContacts
++ Should call a print statement for each element in its argument contactsList
++ Should call formatContact for each element in contactsList
+
+#### formatContact
++ Should return a String with the formatted details of each contact
