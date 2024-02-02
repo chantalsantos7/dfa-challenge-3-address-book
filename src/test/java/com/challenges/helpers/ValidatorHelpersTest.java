@@ -67,7 +67,14 @@ public class ValidatorHelpersTest {
         @Test
         public void testValidateContactInputReturnsFalseIfPhoneContactDetailsDoNotMatchPhonePattern()
         {
+            String[] invalidPhoneNumbers = new String[] {
+                    "-44 5551 123555", "0555ewew2234555", "(0722) 5555555555555 #2222", "invalidIsNotANumber"
+            };
 
+            for (String phoneNumber : invalidPhoneNumbers)
+            {
+                assertFalse(ValidatorHelpers.validateContactInput(phoneNumber, ContactDetailType.PHONE_NUMBER));
+            }
         }
     }
 }
