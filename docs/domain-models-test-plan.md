@@ -80,7 +80,7 @@ classDiagram
         +String EMAIL_PATTERN$
         
         +isInputNullOrEmpty(String input) boolean$
-        +checkStringMatchesRules(String input, ContactDetailType contactDetailType) String$
+        +checkStringMatchesRules(String input, ContactDetailType contactDetailType) bool$
     }
     
     class DisplayHelpers {
@@ -159,8 +159,10 @@ classDiagram
 + Should return false is String input is in any other form
 
 #### validateContactInput
-+ If contactDetailType is PHONE_NUMBER, return the string if input matches PHONE_PATTERN
-+ If contactDetailType is EMAIL_ADDRESS, return the string if input matches EMAIL_PATTERN
++ If contactDetailType is PHONE_NUMBER, return true if input matches PHONE_PATTERN
+  + return false if it doesn't match PHONE_PATTERN
++ If contactDetailType is EMAIL_ADDRESS, return true if input matches EMAIL_PATTERN
+  + return false if it doesn't match EMAIL_PATTERN
 + Should throw IllegalArgumentException if input is null or empty
 
 ### DisplayHelpers Tests
