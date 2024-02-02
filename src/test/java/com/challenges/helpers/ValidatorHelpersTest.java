@@ -1,7 +1,6 @@
 package com.challenges.helpers;
 
 import com.challenges.addressbook.ContactDetailType;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -52,6 +51,23 @@ public class ValidatorHelpersTest {
             assertThrows(IllegalArgumentException.class, () -> ValidatorHelpers.validateContactInput(null, ContactDetailType.PHONE_NUMBER));
         }
 
+        @Test
+        public void testValidateContactInputReturnsTrueIfPhoneContactDetailMatchesPhonePattern()
+        {
+            String[] validPhoneNumbers = new String[] {
+                    "+44 5551 123555", "05552234555", "(0722) 5555555 #2222"
+            };
 
+            for (String phoneNumber : validPhoneNumbers)
+            {
+                assertTrue(ValidatorHelpers.validateContactInput(phoneNumber, ContactDetailType.PHONE_NUMBER));
+            }
+        }
+
+        @Test
+        public void testValidateContactInputReturnsFalseIfPhoneContactDetailsDoNotMatchPhonePattern()
+        {
+
+        }
     }
 }
