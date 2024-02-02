@@ -52,6 +52,16 @@ public class ValidatorHelpersTest {
         }
 
         @Test
+        public void testValidateContactInputThrowsIllegalArgumentExceptionWhenContactDetailIsWhitespaceOrEmpty()
+        {
+            assertAll(
+                    () -> assertThrows(IllegalArgumentException.class, () -> ValidatorHelpers.validateContactInput("", ContactDetailType.EMAIL_ADDRESS)),
+                    () -> assertThrows(IllegalArgumentException.class, () -> ValidatorHelpers.validateContactInput(" ", ContactDetailType.EMAIL_ADDRESS)),
+                    () -> assertThrows(IllegalArgumentException.class, () -> ValidatorHelpers.validateContactInput("              ", ContactDetailType.EMAIL_ADDRESS))
+            );
+        }
+
+        @Test
         public void testValidateContactInputReturnsTrueIfPhoneContactDetailMatchesPhonePattern()
         {
             String[] validPhoneNumbers = new String[] {
@@ -76,5 +86,7 @@ public class ValidatorHelpersTest {
                 assertFalse(ValidatorHelpers.validateContactInput(phoneNumber, ContactDetailType.PHONE_NUMBER));
             }
         }
+
+
     }
 }
