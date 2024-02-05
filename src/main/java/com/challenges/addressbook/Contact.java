@@ -5,7 +5,9 @@ public class Contact {
     private int id;
     private String name;
     private String phoneNumber;
+    private String emailAddress;
 
+    //Standard constructor for Contact, to fill in all details
     public Contact(String name, String phoneNumber, String emailAddress)
     {
         this.id = nextId++;
@@ -14,6 +16,7 @@ public class Contact {
         this.emailAddress = emailAddress;
     }
 
+    //This Constructor can be used when the user can only supply either a phone number or an email for a contact
     public Contact(String name, String contactDetail, ContactDetailType contactDetailType)
     {
         this.id = nextId++;
@@ -24,7 +27,6 @@ public class Contact {
             case EMAIL_ADDRESS -> this.emailAddress = contactDetail;
         }
     }
-
 
     public int getId() {
         return id;
@@ -42,7 +44,16 @@ public class Contact {
         return emailAddress;
     }
 
-    private String emailAddress;
+//    public boolean validatePhoneNumber() throws IllegalArgumentException
+//    {
+//        return false;
+//    }
+//
+//    public boolean validateEmailAddress()
+//    {
+//        return false;
+//    }
+
 
 
 

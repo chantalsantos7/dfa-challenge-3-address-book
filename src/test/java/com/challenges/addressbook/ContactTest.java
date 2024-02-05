@@ -34,7 +34,7 @@ public class ContactTest {
             assertAll(
                     () -> assertEquals("TestWPhone", contact.getName()),
                     () -> assertEquals("3123555553", contact.getPhoneNumber()),
-                    () -> assertEquals(null, contact.getEmailAddress())
+                    () -> assertNull(contact.getEmailAddress())
             );
         }
 
@@ -45,22 +45,32 @@ public class ContactTest {
             assertAll(
                     () -> assertEquals("TestWEmail", contact.getName()),
                     () -> assertEquals("testEmail@email.com", contact.getEmailAddress()),
-                    () -> assertEquals(null, contact.getPhoneNumber())
+                    () -> assertNull(contact.getPhoneNumber())
             );
         }
 
-        
+        @Nested
+        @DisplayName("ValidatePhoneNumber through Constructor Tests")
+        class ConstructorValidatePhoneNumberTests {
 
-//        @Test
-//        public void testValidatePhoneNumberReturnsExpectedValue()
-//        {
+            @Test
+            public void testValidatePhoneNumberThrowsIllegalArgumentExceptionWhenPhoneNumberIsNull() {
+                assertThrows(IllegalArgumentException.class, () ->
+                        new Contact("Test", null, ContactDetailType.PHONE_NUMBER));
+            }
+
+            @Test
+            public void testValidatePhoneNumberThrowsIllegalArgumentExceptionWhenPhoneNumberIsEmptyString() {
+
+            }
+
+            @Test
+            public void testValidatePhoneNumberThrowsIllegalArgumentExceptionWhenPhoneNumberDoesNotMatchPattern()
+            {
+
+            }
+        }
+
 //
-//        }
-//
-//        @Test
-//        public void testValidateEmailReturnsExpectedValue()
-//        {
-//
-//        }
     }
 }

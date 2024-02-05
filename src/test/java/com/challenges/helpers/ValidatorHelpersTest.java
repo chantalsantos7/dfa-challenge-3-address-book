@@ -87,6 +87,30 @@ public class ValidatorHelpersTest {
             }
         }
 
+        @Test
+        public void testValidateContactInputReturnsTrueIfEmailContactDetailsMatchEmailPattern()
+        {
+            String[] validEmails = new String[] {
+                    "chantalsant1998@gmail.com", "java@digitalfuture.com", "chantalsant1998@yahoo.com"
+            };
 
+            for (String email : validEmails)
+            {
+                assertTrue(ValidatorHelpers.validateContactInput(email, ContactDetailType.EMAIL_ADDRESS));
+            }
+        }
+
+        @Test
+        public void testValidateContactInputReturnsFalseIfEmailContactDetailsDoNotMatchEmailPattern()
+        {
+            String[] invalidEmails = new String[] {
+                    "chantalsant1998mail.com", "java.igitalfuture.com", "%$£t1998@yahoo.com", "s", "invalidEmail"
+            };
+
+            for (String email : invalidEmails)
+            {
+                assertFalse(ValidatorHelpers.validateContactInput(email, ContactDetailType.EMAIL_ADDRESS));
+            }
+        }
     }
 }
