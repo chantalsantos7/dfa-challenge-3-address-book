@@ -155,5 +155,19 @@ public class AddressBookTest {
             assertEquals(0, addressBook.getContactsList().size());
         }
 
+        @Test
+        @DisplayName("RemoveContact should return true if the contact was successfully removed")
+        public void testRemoveContactReturnsTrueIfRemovalWasSuccessful()
+        {
+            assertTrue(addressBook.removeContact(contactToRemove));
+        }
+
+        @Test
+        @DisplayName("RemoveContact should return false if the contact could not be found in the list")
+        public void testRemoveContactReturnsFalseIfRemovalWasNotSuccessful()
+        {
+            Contact contact = mock(Contact.class);
+            assertFalse(addressBook.removeContact(contact));
+        }
     }
 }
