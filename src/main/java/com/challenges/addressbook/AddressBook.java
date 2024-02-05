@@ -51,8 +51,9 @@ public class AddressBook {
         return false;
     }
 
-    public boolean removeContact(Contact contact)
+    public boolean removeContact(Contact contact) throws IllegalArgumentException
     {
+        if (contact == null) throw new IllegalArgumentException();
         return contactsList.remove(contact);
     }
 }

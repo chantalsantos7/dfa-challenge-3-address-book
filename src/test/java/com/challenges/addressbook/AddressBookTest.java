@@ -169,5 +169,12 @@ public class AddressBookTest {
             Contact contact = mock(Contact.class);
             assertFalse(addressBook.removeContact(contact));
         }
+
+        @Test
+        public void testRemoveContactThrowsIllegalArgumentExceptionIfContactIsNull()
+        {
+            assertThrows(IllegalArgumentException.class, () ->
+                    addressBook.removeContact(null));
+        }
     }
 }
