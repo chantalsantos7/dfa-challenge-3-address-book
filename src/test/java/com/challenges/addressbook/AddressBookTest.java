@@ -171,10 +171,19 @@ public class AddressBookTest {
         }
 
         @Test
+        @DisplayName("RemoveContact should throw an IllegalArgumentException if its contact is null")
         public void testRemoveContactThrowsIllegalArgumentExceptionIfContactIsNull()
         {
             assertThrows(IllegalArgumentException.class, () ->
                     addressBook.removeContact(null));
+        }
+
+        @Test
+        @DisplayName("RemoveContact should return false if it tries to remove a contact from an empty contactsList")
+        public void testRemoveContactReturnsFalseIfContactsListWasAlreadyEmpty()
+        {
+            AddressBook newAddressBook = new AddressBook();
+            assertFalse(newAddressBook.removeContact(contactToRemove));
         }
     }
 }
