@@ -1,5 +1,7 @@
 package com.challenges.addressbook;
 
+import com.challenges.helpers.ValidatorHelpers;
+
 public class Contact {
     private static int nextId = 1;
     private int id;
@@ -8,8 +10,12 @@ public class Contact {
     private String emailAddress;
 
     //Standard constructor for Contact, to fill in all details
-    public Contact(String name, String phoneNumber, String emailAddress)
+    public Contact(String name, String phoneNumber, String emailAddress) throws IllegalArgumentException
     {
+        if (ValidatorHelpers.isInputNullOrEmpty(name) || ValidatorHelpers.isInputNullOrEmpty(phoneNumber) || ValidatorHelpers.isInputNullOrEmpty(emailAddress))
+        {
+            throw new IllegalArgumentException();
+        }
         this.id = nextId++;
         this.name = name;
         this.phoneNumber = phoneNumber;
@@ -17,8 +23,9 @@ public class Contact {
     }
 
     //This Constructor can be used when the user can only supply either a phone number or an email for a contact
-    public Contact(String name, String contactDetail, ContactDetailType contactDetailType)
+    public Contact(String name, String contactDetail, ContactDetailType contactDetailType) throws IllegalArgumentException
     {
+        if (ValidatorHelpers.isInputNullOrEmpty(name) || ValidatorHelpers.isInputNullOrEmpty(contactDetail)) throw new IllegalArgumentException();
         this.id = nextId++;
         this.name = name;
         switch (contactDetailType)
