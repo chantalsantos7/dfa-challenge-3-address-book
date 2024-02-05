@@ -50,4 +50,9 @@ public class AddressBook {
         }
         return false;
     }
+
+    public boolean removeContact(Contact contact)
+    {
+        return contactsList.remove(contact);
+    }
 }

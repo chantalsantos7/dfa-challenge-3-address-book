@@ -133,5 +133,27 @@ public class AddressBookTest {
     @DisplayName("RemoveContact Tests")
     public class RemoveContactTests {
 
+        AddressBook addressBook;
+        Contact contactToRemove;
+
+        @BeforeEach
+        public void testInitialisation()
+        {
+            addressBook = new AddressBook();
+            contactToRemove = mock(Contact.class);
+            addressBook.addContact(contactToRemove);
+        }
+
+        @Test
+        @DisplayName("RemoveContact should decrease ContactsList size() by 1")
+        public void testRemoveContactDecreasesContactsListLengthBy1()
+        {
+            //Arrange
+            //Act
+            addressBook.removeContact(contactToRemove);
+            //Assert
+            assertEquals(0, addressBook.getContactsList().size());
+        }
+
     }
 }
