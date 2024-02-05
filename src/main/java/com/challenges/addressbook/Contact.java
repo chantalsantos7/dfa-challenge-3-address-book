@@ -30,8 +30,14 @@ public class Contact {
         this.name = name;
         switch (contactDetailType)
         {
-            case PHONE_NUMBER -> this.phoneNumber = contactDetail;
-            case EMAIL_ADDRESS -> this.emailAddress = contactDetail;
+            case PHONE_NUMBER -> {
+                this.phoneNumber = contactDetail;
+                this.emailAddress = "";
+            }
+            case EMAIL_ADDRESS -> {
+                this.emailAddress = contactDetail;
+                this.phoneNumber = "";
+            }
         }
     }
 
@@ -50,19 +56,5 @@ public class Contact {
     public String getEmailAddress() {
         return emailAddress;
     }
-
-//    public boolean validatePhoneNumber() throws IllegalArgumentException
-//    {
-//        return false;
-//    }
-//
-//    public boolean validateEmailAddress()
-//    {
-//        return false;
-//    }
-
-
-
-
 
 }

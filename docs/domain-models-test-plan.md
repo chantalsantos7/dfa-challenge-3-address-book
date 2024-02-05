@@ -46,7 +46,7 @@ classDiagram
         +editContact(Contact contact) void
         +viewContacts() void
         +deleteAllContacts() void
-        -checkDuplicate(String contactDetail) boolean
+        -checkDuplicate(Contact contact) boolean
     }
     
     class Contact {
@@ -95,9 +95,8 @@ classDiagram
 
 #### addContact
 * Length of ArrayList<> contacts should increase by 1
-* Contact can be found in ArrayList<> contacts
-* Should be able to add a Contact when the contacts list isn't empty
 * Adding a null Contact should throw an exception
+* Should not be able to add a contact with a duplicate phone number or email
 
 #### checkDuplicate
 + Will be tested in it's calling class, addContact
