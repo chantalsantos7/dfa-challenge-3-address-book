@@ -31,7 +31,7 @@ public class AddressBookTest {
 
     @Nested
     @DisplayName("AddContact Tests")
-    class AddContactTests {
+    public class AddContactTests {
 
         private AddressBook addressBook;
         private Contact contact;
@@ -59,39 +59,79 @@ public class AddressBookTest {
                    addressBook.addContact(contact));
         }
 
-        @Test
-        @DisplayName("AddContact should throw IllegalArgumentException when trying to add duplicate phone number")
-        public void testAddContactThrowsIllegalArgumentExceptionIfPhoneNumberIsADuplicateOfExistingContact()
-        {
-            //Arrange
-            Contact duplicateContact = mock(Contact.class);
-            when(contact.getPhoneNumber()).thenReturn("12345678910");
-            when(duplicateContact.getPhoneNumber()).thenReturn("12345678910");
-            when(contact.getEmailAddress()).thenReturn("");
-            when(duplicateContact.getEmailAddress()).thenReturn("");
-            addressBook.addContact(contact);
+        @Nested
+        @DisplayName("checkDuplicate tests within addContact")
+        public class CheckDuplicateTests {
 
-            //Act & Assert
-            assertThrows(IllegalArgumentException.class, () ->
-                    addressBook.addContact(duplicateContact));
+            Contact duplicateContact;
+            @BeforeEach
+            public void testInitialisation()
+            {
+                duplicateContact = mock(Contact.class);
 
+            }
+            @Test
+            @DisplayName("AddContact should throw IllegalArgumentException when trying to add duplicate phone number")
+            public void testAddContactThrowsIllegalArgumentExceptionIfPhoneNumberIsADuplicateOfExistingContact()
+            {
+                //Arrange
+                when(contact.getPhoneNumber()).thenReturn("12345678910");
+                when(duplicateContact.getPhoneNumber()).thenReturn("12345678910");
+                when(contact.getEmailAddress()).thenReturn("");
+                when(duplicateContact.getEmailAddress()).thenReturn("");
+                addressBook.addContact(contact);
+
+                //Act & Assert
+                assertThrows(IllegalArgumentException.class, () ->
+                        addressBook.addContact(duplicateContact));
+
+            }
+
+            @Test
+            @DisplayName("AddContact should throw IllegalArgumentException when trying to add duplicate email address")
+            public void testAddContactDoesNotAddContactIfEmailAddressIsADuplicateOfExistingContact()
+            {
+                //Arrange
+                when(contact.getEmailAddress()).thenReturn("test@email.com");
+                when(duplicateContact.getEmailAddress()).thenReturn("test@email.com");
+                when(contact.getPhoneNumber()).thenReturn("");
+                when(duplicateContact.getPhoneNumber()).thenReturn("");
+                addressBook.addContact(contact);
+
+                //Act & Assert
+                assertThrows(IllegalArgumentException.class, () ->
+                        addressBook.addContact(duplicateContact));
+            }
+
+            /*When only a single contact detail is passed to a constructor, the other detail will be set to an empty string
+             * AddContact should not be allowed to throw an error if the contacts have different emails but empty phone numbers, and vice versa */
+            @Test
+            @DisplayName("AddContact shouldn't throw IllegalArgumentException if the 'duplicate' contact details are actually empty strings")
+
+            public void testAddContactDoesNotThrowIllegalArgumentExceptionIfDuplicateContactDetailsAreActuallyEmpty()
+            {
+                //Arrange
+                Contact notDuplicateContact = mock(Contact.class);
+                when(contact.getPhoneNumber()).thenReturn("12345678910");
+                when(notDuplicateContact.getPhoneNumber()).thenReturn("5437678910");
+                when(contact.getEmailAddress()).thenReturn("");
+                when(notDuplicateContact.getEmailAddress()).thenReturn("");
+
+                //Act
+                addressBook.addContact(contact);
+                addressBook.addContact(notDuplicateContact);
+
+                //Assert
+                assertEquals(2, addressBook.getContactsList().size());
+            }
         }
 
-        @Test
-        @DisplayName("AddContact should throw IllegalArgumentException when trying to add duplicate email address")
-        public void testAddContactDoesNotAddContactIfEmailAddressIsADuplicateOfExistingContact()
-        {
-            //Arrange
-            Contact duplicateContact = mock(Contact.class);
-            when(contact.getEmailAddress()).thenReturn("test@email.com");
-            when(duplicateContact.getEmailAddress()).thenReturn("test@email.com");
-            when(contact.getPhoneNumber()).thenReturn("");
-            when(duplicateContact.getPhoneNumber()).thenReturn("");
-            addressBook.addContact(contact);
 
-            //Act & Assert
-            assertThrows(IllegalArgumentException.class, () ->
-                    addressBook.addContact(duplicateContact));
-        }
+    }
+
+    @Nested
+    @DisplayName("RemoveContact Tests")
+    public class RemoveContactTests {
+
     }
 }

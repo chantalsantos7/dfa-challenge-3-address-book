@@ -30,12 +30,13 @@ public class AddressBook {
         contactsList.add(contact);
     }
 
-    /*checkDuplicate refactored into two separate functions: checkDuplicatePhoneNumber & checkDuplicateEmail*/
+//    checkDuplicate refactored into two separate functions: checkDuplicatePhoneNumber() & checkDuplicateEmail()
     private boolean checkDuplicateEmail(Contact contact)
     {
         for (Contact existingContact : contactsList)
         {
-            if (existingContact.getEmailAddress().equals(contact.getEmailAddress())) return true;
+            if (!existingContact.getEmailAddress().isEmpty()
+                    && existingContact.getEmailAddress().equals(contact.getEmailAddress())) return true;
         }
         return false;
     }
@@ -44,7 +45,8 @@ public class AddressBook {
     {
         for (Contact existingContact : contactsList)
         {
-            if (existingContact.getPhoneNumber().equals(contact.getPhoneNumber())) return true;
+            if (!existingContact.getPhoneNumber().isEmpty()
+                    && existingContact.getPhoneNumber().equals(contact.getPhoneNumber())) return true;
         }
         return false;
     }

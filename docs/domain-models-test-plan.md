@@ -107,7 +107,7 @@ classDiagram
 #### removeContact
 + Length of ArrayList<> contacts should decrease by 1
 + removeContact will return true if successfully removed a Contact
-+ Contact cannot be found in ArrayList<> contacts
++ Contact cannot be found in ArrayList<> contacts after calling this function
 + Trying to remove a Contact that isn't in already in the list will not affect the contacts list and will return false
 + Trying to remove a null contact should throw an exception
 + Trying to remove a contact when the list is empty should return false

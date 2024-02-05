@@ -23,6 +23,7 @@ public class Contact {
     }
 
     //This Constructor can be used when the user can only supply either a phone number or an email for a contact
+    //It will set the contact detail that hasn't been supplied to an empty string, but will not allow an empty string to be passed to it as an argument
     public Contact(String name, String contactDetail, ContactDetailType contactDetailType) throws IllegalArgumentException
     {
         if (ValidatorHelpers.isInputNullOrEmpty(name) || ValidatorHelpers.isInputNullOrEmpty(contactDetail)) throw new IllegalArgumentException();
