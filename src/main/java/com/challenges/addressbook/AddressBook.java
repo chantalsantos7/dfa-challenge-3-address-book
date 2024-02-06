@@ -1,5 +1,6 @@
 package com.challenges.addressbook;
 
+import com.challenges.helpers.DisplayHelpers;
 import com.challenges.helpers.ValidatorHelpers;
 
 import java.util.ArrayList;
@@ -13,10 +14,6 @@ public class AddressBook {
     {
         id = nextId++;
         contactsList = new ArrayList<>();
-    }
-
-    public int getId() {
-        return id;
     }
 
     public ArrayList<Contact> getContactsList() {
@@ -87,5 +84,16 @@ public class AddressBook {
             }
         }
         return null;
+    }
+
+    public String viewAllContacts()
+    {
+        StringBuilder allContacts = new StringBuilder();
+        for (Contact contact : contactsList)
+        {
+            allContacts.append(DisplayHelpers.formatContactForDisplay(contact));
+        }
+
+        return allContacts.toString();
     }
 }

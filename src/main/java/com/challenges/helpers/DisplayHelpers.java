@@ -14,9 +14,8 @@ public class DisplayHelpers {
         * Phone:
         * Email:
         * */
-        String contactDisplay = String.format("%s%n" +
+        return String.format("%n%s%n" +
                 "Phone: %s%n" +
                 "Email: %s%n", contact.getName(), contact.getPhoneNumber(), contact.getEmailAddress());
-        return contactDisplay;
     }
 }

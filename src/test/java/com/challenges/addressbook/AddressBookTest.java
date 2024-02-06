@@ -312,4 +312,43 @@ public class AddressBookTest {
 
 
     }
+
+    @Nested
+    @DisplayName("ViewAllContacts Tests")
+    public class ViewAllContactsTests {
+
+        AddressBook addressBook;
+        Contact[] contacts;
+
+        @BeforeEach
+        public void testInitialisation()
+        {
+            addressBook = new AddressBook();
+            contacts = new Contact[5];
+
+            for (int i = 0; i < contacts.length; i++)
+            {
+                contacts[i] = mock(Contact.class);
+                when(contacts[i].getName()).thenReturn("mockContact" + i);
+                when(contacts[i].getEmailAddress()).thenReturn("mock" + i + "@email.com");
+                when(contacts[i].getPhoneNumber()).thenReturn(i + "5555678910");
+                addressBook.addContact(contacts[i]);
+            }
+        }
+
+        @Test
+        @DisplayName("ViewAllContacts should return a string with all formatted contacts")
+        public void testViewAllContactsReturnsStringWithAllFormattedContacts()
+        {
+            StringBuilder expectedString = new StringBuilder();
+            for (Contact contact : contacts)
+            {
+                expectedString.append(String.format("%n%s%n" +
+                        "Phone: %s%n" +
+                        "Email: %s%n", contact.getName(), contact.getPhoneNumber(), contact.getEmailAddress()));
+            }
+            assertEquals(expectedString.toString(), addressBook.viewAllContacts());
+        }
+
+    }
 }
