@@ -274,5 +274,13 @@ public class AddressBookTest {
                     addressBook.findContact(null, ContactDetailType.EMAIL_ADDRESS));
         }
 
+        @Test
+        @DisplayName("FindContact should throw IllegalArgumentException if name search criteria is empty")
+        public void testFindContactThrowsIllegalArgumentExceptionIfNameSearchCriteriaIsEmpty()
+        {
+            assertThrows(IllegalArgumentException.class, () ->
+                    addressBook.findContact(""));
+        }
+
     }
 }
