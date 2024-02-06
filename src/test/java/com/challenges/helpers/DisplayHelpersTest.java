@@ -37,7 +37,7 @@ public class DisplayHelpersTest {
         {
             for (Contact contact : contacts)
             {
-                String expectedString = String.format("%s%n" +
+                String expectedString = String.format("%n%s%n" +
                         "Phone: %s%n" +
                         "Email: %s%n", contact.getName(), contact.getPhoneNumber(), contact.getEmailAddress());
                 assertEquals(expectedString, DisplayHelpers.formatContactForDisplay(contact));

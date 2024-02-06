@@ -33,7 +33,7 @@ public class ContactTest {
             assertAll(
                     () -> assertEquals("TestWPhone", contact.getName()),
                     () -> assertEquals("3123555553", contact.getPhoneNumber()),
-                    () -> assertNull(contact.getEmailAddress())
+                    () -> assertEquals("", contact.getEmailAddress())
             );
         }
 
@@ -43,7 +43,7 @@ public class ContactTest {
             assertAll(
                     () -> assertEquals("TestWEmail", contact.getName()),
                     () -> assertEquals("testEmail@email.com", contact.getEmailAddress()),
-                    () -> assertNull(contact.getPhoneNumber())
+                    () -> assertEquals("", contact.getPhoneNumber())
             );
         }
 
