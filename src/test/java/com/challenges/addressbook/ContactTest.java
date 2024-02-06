@@ -27,8 +27,7 @@ public class ContactTest {
         }
 
         @Test
-        public void testPhoneNumberConstructorReturnsExpectedValues()
-        {
+        public void testPhoneNumberConstructorReturnsExpectedValues() {
             Contact contact = new Contact("TestWPhone", "3123555553", ContactDetailType.PHONE_NUMBER);
 
             assertAll(
@@ -39,8 +38,7 @@ public class ContactTest {
         }
 
         @Test
-        public void testEmailAddressConstructorReturnsExpectedValues()
-        {
+        public void testEmailAddressConstructorReturnsExpectedValues() {
             Contact contact = new Contact("TestWEmail", "testEmail@email.com", ContactDetailType.EMAIL_ADDRESS);
             assertAll(
                     () -> assertEquals("TestWEmail", contact.getName()),
@@ -56,13 +54,14 @@ public class ContactTest {
             @Test
             @DisplayName("Test that the standard Contact constructor nullOrEmpty checks its arguments")
             /*The constructor doesn't compile if a null value is the last argument, so testing the email address in this unit is unnecessary*/
-            public void testRegularContactConstructorThrowsIllegalArgumentExceptionWhenContactDetailsAreNullOrEmpty()
-            {
+            public void testRegularContactConstructorThrowsIllegalArgumentExceptionWhenContactDetailsAreNullOrEmpty() {
                 assertAll(
                         () -> assertThrows(IllegalArgumentException.class, () ->
                                 new Contact(null, "1290340344", "dfdfdfdf")),
                         () -> assertThrows(IllegalArgumentException.class, () ->
-                                new Contact("name", null, "dfdfdfdf"))
+                                new Contact("name", null, "dfdfdfdf")),
+                        () -> assertThrows(IllegalArgumentException.class, () ->
+                                new Contact("", "1290340344", "dfdfdfdf"))
                 );
 
             }
@@ -71,7 +70,9 @@ public class ContactTest {
             public void testPhoneConstructorThrowsIllegalArgumentExceptionWhenNameOrPhoneNumberIsNullOrEmpty() {
                 assertAll(
                         () -> assertThrows(IllegalArgumentException.class, () ->
-                                new Contact(null, "null", ContactDetailType.PHONE_NUMBER)),
+                                new Contact(null, "not null", ContactDetailType.PHONE_NUMBER)),
+                        () -> assertThrows(IllegalArgumentException.class, () ->
+                                new Contact("", "12323", ContactDetailType.PHONE_NUMBER)),
                         () -> assertThrows(IllegalArgumentException.class, () ->
                                 new Contact("Test", null, ContactDetailType.PHONE_NUMBER)),
                         () -> assertThrows(IllegalArgumentException.class, () ->
@@ -80,11 +81,12 @@ public class ContactTest {
             }
 
             @Test
-            public void testEmailConstructorThrowsIllegalArgumentExceptionWhenEmailIsNullOrEmpty()
-            {
+            public void testEmailConstructorThrowsIllegalArgumentExceptionWhenEmailIsNullOrEmpty() {
                 assertAll(
                         () -> assertThrows(IllegalArgumentException.class, () ->
-                                new Contact(null, "null", ContactDetailType.EMAIL_ADDRESS)),
+                                new Contact(null, "not null", ContactDetailType.EMAIL_ADDRESS)),
+                        () -> assertThrows(IllegalArgumentException.class, () ->
+                                new Contact("", "not null", ContactDetailType.EMAIL_ADDRESS)),
                         () -> assertThrows(IllegalArgumentException.class, () ->
                                 new Contact("Test", null, ContactDetailType.EMAIL_ADDRESS)),
                         () -> assertThrows(IllegalArgumentException.class, () ->
@@ -95,4 +97,5 @@ public class ContactTest {
 
 //
     }
+
 }

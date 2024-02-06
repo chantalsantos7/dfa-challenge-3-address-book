@@ -43,7 +43,6 @@ classDiagram
         +addContact() void
         +removeContact(Contact contact) boolean
         +findContact(String searchCriteria) Contact
-        +editContact(Contact contact) void
         +viewContacts() void
         +deleteAllContacts() void
         -checkDuplicate(Contact contact) boolean
@@ -116,9 +115,6 @@ classDiagram
 + Should return the first Contact that matches search criteria
 + Function should return a null if it cannot find the Contact
 + Should throw an error if a null object is passed to it
-
-#### editContact
-+ Should be able to edit name, phone number, or address for selected Contact
 
 #### viewContacts
 + Should call a print statement for each element in the contacts list
