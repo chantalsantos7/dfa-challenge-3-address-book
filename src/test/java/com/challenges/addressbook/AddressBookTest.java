@@ -186,4 +186,65 @@ public class AddressBookTest {
             assertFalse(newAddressBook.removeContact(contactToRemove));
         }
     }
+
+    @Nested
+    @DisplayName("FindContact Tests")
+    public class FindContactTests {
+
+        AddressBook addressBook;
+        Contact[] contactsToFind;
+
+        @BeforeEach
+        public void testInitialisation()
+        {
+            addressBook = new AddressBook();
+            contactsToFind = new Contact[5];
+
+            for (int i = 0; i < contactsToFind.length; i++)
+            {
+                contactsToFind[i] = mock(Contact.class);
+                when(contactsToFind[i].getName()).thenReturn("mockContact" + i);
+                when(contactsToFind[i].getEmailAddress()).thenReturn("mock" + i + "@email.com");
+                when(contactsToFind[i].getPhoneNumber()).thenReturn(i + "5555678910");
+                addressBook.addContact(contactsToFind[i]);
+            }
+        }
+
+        @Test
+        @DisplayName("FindContact should return the first Contact with a name that correctly matches the search criteria")
+        public void testFindContactReturnsContactWithNameMatchingSearchCriteria()
+        {
+            for (Contact contact : contactsToFind)
+            {
+                assertEquals(contact, addressBook.findContact(contact.getName()));
+            }
+        }
+
+        @Test
+        @DisplayName("FindContact should return null if it can't find a contact that matches the search criteria")
+        public void testFindContactReturnsNullIfItCannotFindMatchingContact()
+        {
+            assertNull(addressBook.findContact("not in list"));
+        }
+
+        @Test
+        @DisplayName("FindContact should return the first Contact with an email that correctly matches the search criteria")
+        public void testFindContactReturnsContactWithEmailMatchingSearchCriteria()
+        {
+            for (Contact contact : contactsToFind)
+            {
+                assertEquals(contact, addressBook.findContact(contact.getEmailAddress(), ContactDetailType.EMAIL_ADDRESS));
+            }
+        }
+
+        @Test
+        @DisplayName("FindContact should return the first Contact with a phone number that correctly matches the search criteria")
+        public void testFindContactReturnsContactWithPhoneNumberMatchingSearchCriteria()
+        {
+            for (Contact contact : contactsToFind)
+            {
+                assertEquals(contact, addressBook.findContact(contact.getPhoneNumber(), ContactDetailType.PHONE_NUMBER));
+            }
+        }
+    }
 }
