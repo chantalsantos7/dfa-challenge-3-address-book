@@ -6,6 +6,7 @@ import com.challenges.addressbook.ContactDetailType;
 import com.challenges.helpers.DisplayHelpers;
 import com.challenges.helpers.ValidatorHelpers;
 
+import java.util.Iterator;
 import java.util.Scanner;
 
 public class App {
@@ -29,7 +30,7 @@ public class App {
             Scanner in = new Scanner(System.in);
             option = in.nextInt();
             in.nextLine();
-            System.out.println("You selected " + option);
+            System.out.println("You selected " + option + "\n");
             menuSelector(option);
         } while (option != 7);
 
@@ -53,8 +54,10 @@ public class App {
                 System.out.println(addressBook.viewAllContacts());
                 break;
             case 5:
+                deleteContact();
                 break;
             case 6:
+                deleteAllContacts();
                 break;
             default:
         }
@@ -82,8 +85,16 @@ public class App {
         String email = in.nextLine().trim();
         email = validateEmailInput(email);
 
-        newContact = new Contact(name, phoneNumber, email);
-        addressBook.addContact(newContact);
+        try {
+            newContact = new Contact(name, phoneNumber, email);
+            addressBook.addContact(newContact);
+        }
+        catch (IllegalArgumentException e)
+        {
+            System.out.println(e.getMessage());
+        }
+
+
     }
 
     private static Contact findContact()
@@ -127,31 +138,74 @@ public class App {
     {
         Scanner in = new Scanner(System.in);
         System.out.println("Which contact do you want to edit?");
-        Contact contactToEdit = findContact();
-        System.out.println("\nFor each entry, type the new value. To leave it unchanged, leave it blank.");
-        System.out.print(String.format("Name: %s, new value: ", contactToEdit.getName()));
-        String newName = in.nextLine().trim();
+        try {
+            Contact contactToEdit = findContact();
+            //what if this contact is Null?
+            System.out.println("\nFor each entry, type the new value. To leave it unchanged, leave it blank.");
 
-        if (!newName.isEmpty())
-        {
-            newName = validateNameInput(newName);
-            contactToEdit.setName(newName);
+            System.out.printf("Name: %s, new value: ", contactToEdit.getName());
+            String newName = in.nextLine().trim();
+
+            if (!newName.isEmpty())
+            {
+                newName = validateNameInput(newName);
+                contactToEdit.setName(newName);
+            }
+
+            System.out.printf("Phone: %s, new value: ", contactToEdit.getPhoneNumber());
+            String newPhone = in.nextLine().trim();
+            if (!newPhone.isEmpty())
+            {
+                newPhone = validatePhoneInput(newPhone);
+                contactToEdit.setPhoneNumber(newPhone);
+            }
+
+            System.out.printf("Email: %s, new value: ", contactToEdit.getEmailAddress());
+            String newEmail = in.nextLine().trim();
+            if (!newEmail.isEmpty())
+            {
+                newEmail = validateEmailInput(newEmail);
+                contactToEdit.setEmailAddress(newEmail);
+            }
         }
-
-        System.out.print(String.format("Phone: %s, new value: ", contactToEdit.getPhoneNumber()));
-        String newPhone = in.nextLine().trim();
-        if (!newPhone.isEmpty())
+        catch (NullPointerException e)
         {
-            newPhone = validatePhoneInput(newPhone);
-            contactToEdit.setPhoneNumber(newPhone);
+            System.out.println("That contact could not be found, returning to the menu.");
         }
+    }
 
-        System.out.print(String.format("Email: %s, new value: ", contactToEdit.getEmailAddress()));
-        String newEmail = in.nextLine().trim();
-        if (!newEmail.isEmpty())
+    private static void deleteContact()
+    {
+        Scanner in = new Scanner(System.in);
+        System.out.println("Which contact do you want to delete?");
+        Contact deleteContact;
+
+        try {
+            deleteContact = findContact();
+            addressBook.removeContact(deleteContact);
+            System.out.println("Contact deleted.");
+        } catch (NullPointerException e)
         {
-            newEmail = validateEmailInput(newEmail);
-            contactToEdit.setEmailAddress(newEmail);
+            System.out.println("Could not find that contact. Returning to menu.");
+        }
+    }
+
+    private static void deleteAllContacts()
+    {
+        Scanner in = new Scanner(System.in);
+        System.out.println("Are you sure you want to delete all contacts in your address book? This cannot be undone.");
+        System.out.println("Type yes to confirm deletion of all contacts:");
+
+        if (in.nextLine().trim().equals("yes"))
+        {
+            Iterator<Contact> contactsIterator = addressBook.getContactsList().iterator();
+            while (contactsIterator.hasNext())
+            {
+                contactsIterator.next();
+                contactsIterator.remove();
+            }
+
+            System.out.println("All contacts have been deleted.");
         }
     }
 
