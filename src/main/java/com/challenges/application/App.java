@@ -28,7 +28,7 @@ public class App {
             System.out.println("Enter an option from 1-7: ");
             Scanner in = new Scanner(System.in);
             option = in.nextInt();
-
+            in.nextLine();
             System.out.println("You selected " + option);
             menuSelector(option);
         } while (option != 7);
@@ -47,6 +47,7 @@ public class App {
                 findContact();
                 break;
             case 3:
+                editContact();
                 break;
             case 4:
                 System.out.println(addressBook.viewAllContacts());
@@ -65,8 +66,9 @@ public class App {
         System.out.println("Please enter the details of the new contact.\nYou can leave either the phone number or email address empty, but not both.");
         Contact newContact;
 
-        System.out.print("Name: ");
         Scanner in = new Scanner(System.in);
+        System.out.print("Name: ");
+
         String name = in.nextLine().trim();
         name = validateNameInput(name);
 
@@ -84,40 +86,73 @@ public class App {
         addressBook.addContact(newContact);
     }
 
-    private static void findContact()
+    private static Contact findContact()
     {
+        Contact foundContact;
         System.out.println("Do you want to find the contact by,\n 1. Name\n 2. Phone Number\n 3. Email Address");
         System.out.print("Enter your selection: ");
         Scanner in = new Scanner(System.in);
         int option = in.nextInt();
+        in.nextLine();
 
         switch (option) {
             case 1:
-                System.out.print("Enter name: ");
+                System.out.println("Enter name: ");
                 String name = in.nextLine().trim();
                 name = validateNameInput(name);
-                DisplayHelpers.formatContactForDisplay(addressBook.findContact(name));
+                foundContact = addressBook.findContact(name);
+                System.out.println(DisplayHelpers.formatContactForDisplay(foundContact));
                 break;
             case 2:
                 System.out.println("Enter phone number: ");
                 String phoneNumber = in.nextLine().trim();
                 phoneNumber = validatePhoneInput(phoneNumber);
-                DisplayHelpers.formatContactForDisplay(addressBook.findContact(phoneNumber, ContactDetailType.PHONE_NUMBER));
+                foundContact = addressBook.findContact(phoneNumber, ContactDetailType.PHONE_NUMBER);
+                System.out.println(DisplayHelpers.formatContactForDisplay(foundContact));
                 break;
             case 3:
                 System.out.println("Enter email: ");
                 String email = in.nextLine().trim();
                 email = validateEmailInput(email);
-                DisplayHelpers.formatContactForDisplay(addressBook.findContact(email, ContactDetailType.EMAIL_ADDRESS));
+                foundContact = addressBook.findContact(email, ContactDetailType.EMAIL_ADDRESS);
+                System.out.println(DisplayHelpers.formatContactForDisplay(foundContact));
                 break;
             default:
-                break;
+                return null;
         }
+        return foundContact;
     }
 
     private static void editContact()
     {
+        Scanner in = new Scanner(System.in);
+        System.out.println("Which contact do you want to edit?");
+        Contact contactToEdit = findContact();
+        System.out.println("\nFor each entry, type the new value. To leave it unchanged, leave it blank.");
+        System.out.print(String.format("Name: %s, new value: ", contactToEdit.getName()));
+        String newName = in.nextLine().trim();
 
+        if (!newName.isEmpty())
+        {
+            newName = validateNameInput(newName);
+            contactToEdit.setName(newName);
+        }
+
+        System.out.print(String.format("Phone: %s, new value: ", contactToEdit.getPhoneNumber()));
+        String newPhone = in.nextLine().trim();
+        if (!newPhone.isEmpty())
+        {
+            newPhone = validatePhoneInput(newPhone);
+            contactToEdit.setPhoneNumber(newPhone);
+        }
+
+        System.out.print(String.format("Email: %s, new value: ", contactToEdit.getEmailAddress()));
+        String newEmail = in.nextLine().trim();
+        if (!newEmail.isEmpty())
+        {
+            newEmail = validateEmailInput(newEmail);
+            contactToEdit.setEmailAddress(newEmail);
+        }
     }
 
     private static String validateNameInput(String name)
