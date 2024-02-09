@@ -4,6 +4,7 @@ import com.challenges.helpers.DisplayHelpers;
 import com.challenges.helpers.ValidatorHelpers;
 
 import java.util.ArrayList;
+import java.util.function.Function;
 
 public class AddressBook {
     static int nextId = 1;
@@ -23,14 +24,15 @@ public class AddressBook {
     public void addContact(Contact contact) throws IllegalArgumentException
     {
         if (contact == null) throw new IllegalArgumentException();
-        if (checkDuplicatePhoneNumber(contact)) throw new IllegalArgumentException();
-        if (checkDuplicateEmail(contact)) throw new IllegalArgumentException();
+        if (checkDuplicate(contact, Contact::getEmailAddress)) throw new IllegalArgumentException();
+        if (checkDuplicate(contact, Contact::getPhoneNumber)) throw new IllegalArgumentException();
 
         contactsList.add(contact);
     }
 
-//    checkDuplicate refactored into two separate functions: checkDuplicatePhoneNumber() & checkDuplicateEmail()
-    private boolean checkDuplicateEmail(Contact contact)
+   /* checkDuplicate initially refactored into two separate functions: checkDuplicatePhoneNumber() & checkDuplicateEmail()
+   Original Code commented out
+   private boolean checkDuplicateEmail(Contact contact)
     {
         for (Contact existingContact : contactsList)
         {
@@ -48,7 +50,20 @@ public class AddressBook {
                     && existingContact.getPhoneNumber().equals(contact.getPhoneNumber())) return true;
         }
         return false;
+    }*/
+
+    //The checkDuplicate function disregard empty email and phone number entries, so it doesn't count a Contact with a valid empty entry as a duplicate
+    //checkDuplicate refactored by Copilot from checkDuplicateEmail and checkDuplicatePhoneNumber above
+    private boolean checkDuplicate(Contact contact, Function<Contact, String> attributeGetter) {
+        for (Contact existingContact : contactsList) {
+            String attribute = attributeGetter.apply(existingContact);
+            if (!attribute.isEmpty() && attribute.equals(attributeGetter.apply(contact))) {
+                return true;
+            }
+        }
+        return false;
     }
+
 
     public boolean removeContact(Contact contact) throws IllegalArgumentException
     {
