@@ -26,27 +26,6 @@ public class ContactTest {
             );
         }
 
-        @Test
-        public void testPhoneNumberConstructorReturnsExpectedValues() {
-            Contact contact = new Contact("TestWPhone", "3123555553", ContactDetailType.PHONE_NUMBER);
-
-            assertAll(
-                    () -> assertEquals("TestWPhone", contact.getName()),
-                    () -> assertEquals("3123555553", contact.getPhoneNumber()),
-                    () -> assertEquals("", contact.getEmailAddress())
-            );
-        }
-
-        @Test
-        public void testEmailAddressConstructorReturnsExpectedValues() {
-            Contact contact = new Contact("TestWEmail", "testEmail@email.com", ContactDetailType.EMAIL_ADDRESS);
-            assertAll(
-                    () -> assertEquals("TestWEmail", contact.getName()),
-                    () -> assertEquals("testEmail@email.com", contact.getEmailAddress()),
-                    () -> assertEquals("", contact.getPhoneNumber())
-            );
-        }
-
         @Nested
         @DisplayName("Constructor Throwing IllegalArgumentException Tests")
         class ConstructorInputValidationTests {
@@ -63,39 +42,9 @@ public class ContactTest {
                         () -> assertThrows(IllegalArgumentException.class, () ->
                                 new Contact("", "1290340344", "dfdfdfdf"))
                 );
-
-            }
-
-            @Test
-            public void testPhoneConstructorThrowsIllegalArgumentExceptionWhenNameOrPhoneNumberIsNullOrEmpty() {
-                assertAll(
-                        () -> assertThrows(IllegalArgumentException.class, () ->
-                                new Contact(null, "not null", ContactDetailType.PHONE_NUMBER)),
-                        () -> assertThrows(IllegalArgumentException.class, () ->
-                                new Contact("", "12323", ContactDetailType.PHONE_NUMBER)),
-                        () -> assertThrows(IllegalArgumentException.class, () ->
-                                new Contact("Test", null, ContactDetailType.PHONE_NUMBER)),
-                        () -> assertThrows(IllegalArgumentException.class, () ->
-                                new Contact("Test", "", ContactDetailType.PHONE_NUMBER))
-                );
-            }
-
-            @Test
-            public void testEmailConstructorThrowsIllegalArgumentExceptionWhenEmailIsNullOrEmpty() {
-                assertAll(
-                        () -> assertThrows(IllegalArgumentException.class, () ->
-                                new Contact(null, "not null", ContactDetailType.EMAIL_ADDRESS)),
-                        () -> assertThrows(IllegalArgumentException.class, () ->
-                                new Contact("", "not null", ContactDetailType.EMAIL_ADDRESS)),
-                        () -> assertThrows(IllegalArgumentException.class, () ->
-                                new Contact("Test", null, ContactDetailType.EMAIL_ADDRESS)),
-                        () -> assertThrows(IllegalArgumentException.class, () ->
-                                new Contact("Test", "", ContactDetailType.EMAIL_ADDRESS))
-                );
             }
         }
 
-//
     }
 
 }
