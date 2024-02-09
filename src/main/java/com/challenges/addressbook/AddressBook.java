@@ -101,7 +101,7 @@ public class AddressBook {
     {
         if (ValidatorHelpers.isInputNullOrEmpty(searchCriteria)) throw new IllegalArgumentException();
         for (Contact contact : contactsList) {
-            if (contact.getName().equals(searchCriteria)) return contact;
+            if (contact.getName().contains(searchCriteria)) return contact;
         }
         return null;
     }
@@ -123,10 +123,10 @@ public class AddressBook {
             switch (contactDetailType)
             {
                 case PHONE_NUMBER -> {
-                    if (contact.getPhoneNumber().equals(searchCriteria)) return contact;
+                    if (contact.getPhoneNumber().contains(searchCriteria)) return contact;
                 }
                 case EMAIL_ADDRESS -> {
-                    if (contact.getEmailAddress().equals(searchCriteria)) return contact;
+                    if (contact.getEmailAddress().contains(searchCriteria)) return contact;
                 }
             }
         }
