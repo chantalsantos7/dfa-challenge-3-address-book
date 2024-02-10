@@ -9,7 +9,6 @@ public class Contact {
     private String phoneNumber;
     private String emailAddress;
 
-    //Standard constructor for Contact, to fill in all details
     public Contact(String name, String phoneNumber, String emailAddress) throws IllegalArgumentException
     {
         if (ValidatorHelpers.isInputNullOrEmpty(name) || ValidatorHelpers.isInputNullOrEmpty(phoneNumber) || ValidatorHelpers.isInputNullOrEmpty(emailAddress))

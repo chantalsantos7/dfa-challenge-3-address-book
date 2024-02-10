@@ -140,7 +140,6 @@ public class App {
         System.out.println("Which contact do you want to edit?");
         try {
             Contact contactToEdit = findContact();
-            //what if this contact is Null?
             System.out.println("\nFor each entry, type the new value. To leave it unchanged, leave it blank.");
 
             System.out.printf("Name: %s, new value: ", contactToEdit.getName());
@@ -176,7 +175,6 @@ public class App {
 
     private static void deleteContact()
     {
-        Scanner in = new Scanner(System.in);
         System.out.println("Which contact do you want to delete?");
         Contact deleteContact;
 

@@ -43,5 +43,12 @@ public class DisplayHelpersTest {
                 assertEquals(expectedString, DisplayHelpers.formatContactForDisplay(contact));
             }
         }
+
+        @Test
+        @DisplayName("DisplayContact should throw an IllegalArgumentException if the param contact is null")
+        public void testDisplayContactThrowsIllegalArgumentExceptionIfContactIsNull()
+        {
+            assertThrows(IllegalArgumentException.class, () ->  DisplayHelpers.formatContactForDisplay(null));
+        }
     }
 }
